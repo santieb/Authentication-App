@@ -1,13 +1,26 @@
-import 'dotenv/config'
-import express from 'express'
+import "dotenv/config"
+import express from "express"
+import mongoose from 'mongoose'
 const app = express()
 
-app.get('/', (req, res, next) => {
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
-  res.json({ msg: "hello world" })
+//database
+const URI = process.env.MONGODB_URL
+
+mongoose.connect(URI, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  }, (err) => {
+    if(err) throw err
+    console.log('Mongodb connection')
 })
 
-const PORT = process.env.PORT
-app.listen(PORT, () =>
-  console.log(`listening on port ${PORT}`)
-)
+//routes
+app.get("/", async (req, res, next) => {
+  res.json({ msg: "hello world"})
+})
+
+const PORT = process.env.PORT || 5000
+app.listen(PORT, () => console.log(`listening on port ${PORT}`))
