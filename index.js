@@ -18,12 +18,8 @@ mongoose.connect(URI, {
 })
 
 //routes
-import userRoutes from './routes/user.routes'
+import userRoutes from './users/routes/user.routes'
 app.use('/users', userRoutes)
-
-app.get("/", async (req, res, next) => {
-  res.json({ msg: "hello world"})
-})
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => console.log(`listening on port ${PORT}`))

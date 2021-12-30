@@ -1,4 +1,4 @@
-import Users from "../models/user.model.js"
+import Users from "../model/user.model"
 
 const userCrtl = {
   register: async (req, res) => {
