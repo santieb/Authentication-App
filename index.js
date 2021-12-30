@@ -18,6 +18,9 @@ mongoose.connect(URI, {
 })
 
 //routes
+import userRoutes from './routes/user.routes'
+app.use('/users', userRoutes)
+
 app.get("/", async (req, res, next) => {
   res.json({ msg: "hello world"})
 })
