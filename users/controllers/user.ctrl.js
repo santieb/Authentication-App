@@ -1,4 +1,4 @@
-import Users from '../model/user.model'
+import Users from '../model/user.model.js'
 import bcript from 'bcrypt'
 
 const userCrtl = {
@@ -21,14 +21,12 @@ const userCrtl = {
 
       const passwordHash = await bcript.hash(password, 12)
 
-      const user = new Users({ name, email, passwordHash })
+      const user = new Users({ name, email, password: passwordHash })
       await user.save()
 
-      res
-        .status(200)
-        .json({ msg: 'Register sucess! Please activate your email to start' })
+      res.status(200).json({ msg: 'Register sucess!' })
     } catch (err) {
-      return res.status(505).json({ msg: err.message })
+      return res.status(505).json({ msg: err })
     }
   }
 }
