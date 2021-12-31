@@ -3,18 +3,18 @@ import mongoose from 'mongoose'
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Please, enter your name!"],
+    required: [true, 'Please, enter your name!']
   },
   email: {
     type: String,
-    required: [true, "Please, enter your email!"],
+    required: [true, 'Please, enter your email!'],
     unique: true,
     trim: true,
     lowercase: true
   },
   password: {
     type: String,
-    required: [true, "Please, enter your password!"],
+    required: [true, 'Please, enter your password!']
   },
   role: {
     type: Number,
@@ -22,10 +22,10 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    default: ""
+    default: ''
   }
 }, {
   timestamps: true
 })
 
-export default mongoose.model("Users", userSchema)
+export default mongoose.model('Users', userSchema)

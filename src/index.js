@@ -1,23 +1,26 @@
-import "dotenv/config"
-import express from "express"
+import 'dotenv/config'
+import express from 'express'
 import mongoose from 'mongoose'
+
 const app = express()
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-//database
 const URI = process.env.MONGODB_URL
 
-mongoose.connect(URI, {
+mongoose.connect(
+  URI,
+  {
     useUnifiedTopology: true,
-    useNewUrlParser: true,
-  }, (err) => {
-    if(err) throw err
+    useNewUrlParser: true
+  },
+  (err) => {
+    if (err) throw err
     console.log('Mongodb connection')
-})
+  }
+)
 
-//routes
 import userRoutes from './users/routes/user.routes'
 app.use('/users', userRoutes)
 
