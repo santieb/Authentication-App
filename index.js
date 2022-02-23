@@ -25,7 +25,7 @@ mongoose.connect(
   }
 )
 
-import userRoutes from './users/routes/user.routes'
+import userRoutes from './routes/user.routes'
 app.use('/users', userRoutes)
 
 const PORT = process.env.PORT || 5000
