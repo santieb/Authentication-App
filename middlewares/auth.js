@@ -3,8 +3,10 @@ import jwt from 'jsonwebtoken'
 const auth = (req, res, next) => {
   try {
     if (!req.header('Authorization')) return res.status(401).json({ msg: 'No token, authentication denied' })
+
     const token = req.header('Authorization').replace('Bearer ', '')
     if (!token) return res.status(400).json({ msg: 'No token, authentication denied' })
+
     jwt.verify(token, process.env.SECRET, (err, user) => {
       if (err) return res.status(400).json({ msg: 'Token is not valid' })
 

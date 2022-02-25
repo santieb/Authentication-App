@@ -3,8 +3,8 @@ import Users from '../model/user.model.js'
 const isAdmin = async (req, res, next) => {
   try {
     const { id } = req.user
-    const user = await Users.findOne({ _id: id })
 
+    const user = await Users.findById(id)
     if (user.role !== 1) return res.status(500).json({ msg: 'Admin resources access denied' })
 
     next()

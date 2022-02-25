@@ -43,6 +43,7 @@ const userCrtl = {
 
       const token = jwt.sign({ id: user._id }, process.env.SECRET, { expiresIn: '1h' })
       console.log(token)
+
       res.status(200).json({ msg: 'Login sucess!' })
     } catch (err) {
       return res.status(500).json({ msg: err })
@@ -60,6 +61,8 @@ const userCrtl = {
       const isMatch = await bcrypt.compare(password, user.password)
       if (!isMatch) return res.status(400).json({ msg: 'Password is incorrect, you can not change your password' })
 
+      if (newPassword.length < 6) return res.status(400).json({ msg: 'Password must be at least 6 characters' })
+
       const newPasswordHash = await bcrypt.hash(newPassword, 12)
       await Users.findOneAndUpdate({ _id: id }, { password: newPasswordHash })
 
@@ -73,7 +76,22 @@ const userCrtl = {
       const { id } = req.user
 
       const user = await Users.findById(id).select('-password -_id -createdAt -updatedAt -__v')
+
       res.json(user)
+    } catch (err) {
+      return res.status(500).json({ msg: err })
+    }
+  },
+  updateUser: async (req, res) => {
+    try {
+      const { id } = req.user
+      const { name, avatar } = req.body
+
+      if (!name && !avatar) return res.status(400).json({ msg: 'Please fill in all fields' })
+
+      await Users.findOneAndUpdate({ _id: id }, { name, avatar })
+
+      res.json({ msg: 'User info successfully changed!' })
     } catch (err) {
       return res.status(500).json({ msg: err })
     }
